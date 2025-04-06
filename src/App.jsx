@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
-import Description from './components/description/description';
+import Description from './components/description/Description';
 import Option from './components/option/option';
-import Feedback from './components/feedback/feedback';
+import Feedback from './components/feedback/Feedback';
 
 const initialState = {
   good: 0,
