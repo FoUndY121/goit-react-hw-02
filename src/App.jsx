@@ -3,6 +3,7 @@ import React from 'react';
 import Description from './components/description/Description';
 import Option from './components/option/Option';
 import Feedback from './components/feedback/Feedback';
+import Notification from './components/Notification/Notification.jsx';
 
 const initialState = {
   good: 0,
@@ -23,7 +24,7 @@ function App() {
   const updateFeedback = (type) => {
     setFeedback(prev => ({
       ...prev,
-      [type]: prev[type] + 1
+      [type]: prev[type] + 1,
     }));
   };
 
@@ -34,36 +35,31 @@ function App() {
 
   const totalFeedback = Object.values(feedback).reduce((acc, val) => acc + val, 0);
   const positivePercentage = totalFeedback
-    ? Math.round((feedback.good / totalFeedback) * 100)
-    : 0;
-
-  const renderFeedback = () => {
-    if (totalFeedback > 0) {
-      return (
-        <Feedback
-          good={feedback.good}
-          neutral={feedback.neutral}
-          bad={feedback.bad}
-          positivePercentage={positivePercentage}
-        />
-      );
-    } else {
-      return <p>No feedback given</p>;
-    }
-  };
+      ? Math.round((feedback.good / totalFeedback) * 100)
+      : 0;
 
   return (
-    <>
-      <Description />
-      <Option
-        handleGood={() => updateFeedback('good')}
-        handleNeutral={() => updateFeedback('neutral')}
-        handleBad={() => updateFeedback('bad')}
-        handleReset={resetFeedback}
-        totalFeedback={totalFeedback}
-      />
-      {renderFeedback()}
-    </>
+      <>
+        <Description />
+        <Option
+            handleGood={() => updateFeedback('good')}
+            handleNeutral={() => updateFeedback('neutral')}
+            handleBad={() => updateFeedback('bad')}
+            handleReset={resetFeedback}
+            totalFeedback={totalFeedback}
+        />
+
+        {totalFeedback > 0 ? (
+            <Feedback
+                good={feedback.good}
+                neutral={feedback.neutral}
+                bad={feedback.bad}
+                positivePercentage={positivePercentage}
+            />
+        ) : (
+            <Notification message="No feedback given" />
+        )}
+      </>
   );
 }
 
